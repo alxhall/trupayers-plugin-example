@@ -98,6 +98,24 @@ class Trupayers_Customer_Portal_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/trupayers-customer-portal-public.js', array( 'jquery' ), $this->version, false );
 
+
+		/* Using wp_localize_script to pass variables from PHP to javascript */
+		wp_register_script( 'trp_destination_list_js', plugin_dir_url( __FILE__ ) . 'js/trp-destination-list.js', array('jquery'), $this->version, false );
+
+		wp_localize_script( 
+			'trp_destination_list_js',
+			'trpjs',
+			array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce' => wp_create_nonce("trp_destination_list_nonce"),
+				'is_user_logged_in' => is_user_logged_in(),
+				'user_id' => get_current_user_id(),
+				'custom_prop' => "Hello Custom Prop"
+			)
+		);
+
+		wp_enqueue_script('trp_destination_list_js');
+
 	}
 
 }

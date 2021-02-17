@@ -129,14 +129,13 @@ class Trupayers_Customer_Portal {
 
 		/**
 		 * Shortcode classes
-		 * 
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/destination-list.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/destination-single.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/transaction-list.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/invoice-list.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/display-card.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/user-profile.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/trp-destination-list.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/trp-destination-single.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/trp-transaction-list.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/trp-invoice-list.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/trp-display-card.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/shortcodes/trp-user-profile.php';
 
 		$this->loader = new Trupayers_Customer_Portal_Loader();
 

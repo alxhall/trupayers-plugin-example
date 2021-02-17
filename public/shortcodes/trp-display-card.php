@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Shortcode for displaying list of invoices.
+ * Shortcode for displaying card.
  *
  * @link       http://www.spinit.se
  * @since      1.0.0
  *
  */
 
-class Trupayers_Customer_Portal_Shortcode_Invoice_List {
+class Trupayers_Customer_Portal_Shortcode_Display_Card {
 
     /**
 	 * The instance of the helpers class.
@@ -20,6 +20,15 @@ class Trupayers_Customer_Portal_Shortcode_Invoice_List {
     private $api_wrapper;
 
     /**
+	 * The instance of the templates helper class.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $version    The current version of this plugin.
+	 */
+    private $templates;
+
+    /**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -29,6 +38,7 @@ class Trupayers_Customer_Portal_Shortcode_Invoice_List {
 	public function __construct($plugin_name, $version) {
         $this->plugin_name = $plugin_name;
 		$this->version = $version;
+        $this->templates = new Trupayers_Customer_Portal_Template_Loader;
 
         $this->api_wrapper = new Trupayers_Customer_Portal_Api_Wrapper($this->plugin_name, $this->version);
     }
@@ -37,8 +47,21 @@ class Trupayers_Customer_Portal_Shortcode_Invoice_List {
 	 * @since    1.0.0
 	 */
 	public function register() {
-        add_shortcode('trp_invoice_list', [$this, 'add_shortcode']);
+        add_shortcode('trp_display_card', [$this, 'add_shortcode']);
     }
+
+    /**
+     * Loads the template and passes context data
+     */
+    protected function render_template($template_vars) {
+        ob_start();
+        $this->templates
+            ->set_template_data( $template_vars, 'context' )
+            ->get_template_part( 'display', 'card' );
+
+        return ob_get_clean();
+    }
+
 
     /**
      * The shortcode function
@@ -51,18 +74,15 @@ class Trupayers_Customer_Portal_Shortcode_Invoice_List {
         $args = shortcode_atts([
             'arg1' => '',
             'arg2' => '',
-        ], $atts, 'trp_invoice_list' );
+        ], $atts, 'trp_display_card' );
 
-        $params = [
-            'first' => 1,
-            'second' => 2
+        $template_vars = [
+            'caption' => 'Hello world', 
+            'body' => 'Body text'
         ];
 
-        $result = $this->api_wrapper->get_destinations("test", $params);
+        $html = $this->render_template($template_vars);
 
-        $html = $result;
-
-        //$html .= "<div>" . $args['arg1'] . " " . $args['arg2'] . "</div>";
         return $html;
 
     }

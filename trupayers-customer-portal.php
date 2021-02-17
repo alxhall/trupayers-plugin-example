@@ -37,6 +37,19 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'TRUPAYERS_CUSTOMER_PORTAL_VERSION', '1.0.0' );
 
+
+/**
+ * Our API base URL.
+ */
+define( 'TRUPAYERS_API_BASE_URL', 'xxxxxxxxxxxxxxxxxxx' );
+
+
+/**
+ * Store plugin base dir, for easier access later from other classes.
+ * (eg. Include, pubic or admin)
+ */
+define( 'TRUPAYERS_CUSTOMER_PORTAL_BASE_DIR', plugin_dir_path( __FILE__ ) );
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-trupayers-customer-portal-activator.php
@@ -65,6 +78,22 @@ register_deactivation_hook( __FILE__, 'deactivate_trupayers_customer_portal' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-trupayers-customer-portal.php';
 
 /**
+ * Initialize custom template loader
+ *
+ * Template File Loaders in Plugins
+ * Template file loaders like this are used in a lot of large-scale plugins in order to
+ * provide greater flexibility and better control for advanced users that want to tailor
+ * a plugin’s output more to their specific needs.
+ *
+ * @link https://github.com/pippinsplugins/pw-sample-template-loader-plugin
+ * @link https://pippinsplugins.com/template-file-loaders-plugins/
+ */
+if( ! class_exists( 'Gamajo_Template_Loader' ) ) {
+    require TRUPAYERS_CUSTOMER_PORTAL_BASE_DIR . 'includes/libraries/class-gamajo-template-loader.php';
+}
+require TRUPAYERS_CUSTOMER_PORTAL_BASE_DIR . 'includes/libraries/class-trupayers-customer-portal-template-loader.php';
+
+/**
  * Begins execution of the plugin.
  *
  * Since everything within the plugin is registered via hooks,
@@ -80,3 +109,5 @@ function run_trupayers_customer_portal() {
 
 }
 run_trupayers_customer_portal();
+
+
